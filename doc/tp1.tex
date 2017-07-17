@@ -1,0 +1,187 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{graphicx}
+\usepackage[ansinew]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+
+\title{		\textbf{Trabajo Pr\'{a}ctico 1: Conjunto de instrucciones MIPS}}
+
+\author{	Hern\'{a}n Gonz\'{a}lez, \textit{Padr\'{o}n Nro. 79.460}		\\
+            \texttt{ gonzalezhg@yahoo.com.ar }						\\[2.5ex]
+            Pablo Magnaghi, \textit{Padr\'{o}n Nro. 88.126}				\\
+            \texttt{ pablomagnaghi@gmail.com }						\\[2.5ex]
+            Enzo Guagnini, \textit{Padr\'{o}n Nro. 88.325}				\\
+            \texttt{ enzog\_m@hotmail.com }						\\[2.5ex]
+            \normalsize{1er. Cuatrimestre de 2011}					\\
+	    \normalsize{66.20 Organizaci\'{o}n de Computadoras  $-$ Pr\'{a}ctica Martes}\\
+            \normalsize{Facultad de Ingenier\'{i}a, Universidad de Buenos Aires}	\\
+       }
+
+\date{03/05/2011}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+
+\newpage
+\newpage
+
+\section{Introducci\'{o}n}
+Este art\'{i}culo se refiere a la implementaci\'{o}n parcial de un programa desarrollado en lenguaje assembly MIPS, el cual es una versi\'{o}n simplificada del 
+comando \texttt{tr} de UNIX del trabajo anterior.
+Para esto, se proveer\'{a} el c\'{o}digo en C de referencia de dicho comando, que consta fundamentalmente de los archivos \textit{main.c}, \textit{tr.c} y \textit{tr.h}.
+
+\section{Enunciado}
+
+\subsection{Objetivos}
+Familiarizarse con el conjunto de instrucciones MIPS y el concepto de ABI, extendiendo un programa que resuelva el problema descripto en la secci\'{o}n 4.
+
+\subsection{Alcance}
+Este trabajo pr\'{a}ctico es de elaboraci\'{o}n grupal, evaluaci\'{o}n individual, y de car\'{a}cter obligatorio para todos alumnos del curso.
+
+\subsection{Requisitos}
+El informe deber\'{a} ser entregado personalmente, por escrito, en la fecha estipulada, con una  car\'{a}tula que contenga los datos completos de todos los 
+integrantes. Adem\'{a}s, es necesario que el trabajo pr\'{a}ctico incluya (entre otras cosas), la presentaci\'{o}n de los resultados obtenidos, 
+explicando, cuando corresponda, con fundamentos reales, las causas o razones de cada resultado obtenido.
+
+\subsection{Descripci\'{o}n}
+En este trabajo, se reimplementar\'{a} parcialmente en assembly MIPS la versi\'{o}n minimalista del comando tr de UNIX del 
+trabajo anterior [1]. Para esto, se proveer\'{a} el cd\'{o}igo en C de referencia de dicho comando, que consta fundamentalmente 
+de los archivos \textit{main.c}, \textit{tr.c} y \textit{tr.h}. 
+Los alumnos deber\'{a}n reescribir en assembly MIPS32 las funciones definidas en \textit{tr.c}, respetando la interfaz definida 
+en \textit{tr.h}, de forma tal que \textit{tr.c} ser\'{a} reemplazado por c\'{o}digo MIPS32 equivalente contenido en \textit{tr.S}, de 
+manera transparente para \textit{main.c} (es decir, \textit{main.c} se mantendr\'{a} sin modificaciones, y se linkear\'{a} 
+con \textit{tr.S} en lugar de \textit{tr.c}, para formar el ejecutable final).
+
+\subsection{Implementaci\'{o}n}
+
+El programa a implementar deber'{
+a} satisfacer algunos requerimientos m'{i}nimos, que detallamos a continuaci'{o}n:
+
+\subsubsection{ABI}
+Ser\'{a} necesario que el c\'{o}digo presentado utilice la ABI explicada en la clase del martes 12/4/2011 [2].
+
+\subsubsection{Casos de prueba}
+Es necesario que la implementaci\'{o}n propuesta pase todos los casos incluidos tanto en el enunciado del trabajo anterior [1] como en el conjunto de pruebas
+suministrado en el informe del trabajo, los cuales deber\'{a}n estar debidamente documentados y justificados.
+
+\subsubsection{Documentaci\'{o}n}
+El informe deber\'{a} incluir una descripci\'{o}n detallada de las t\'{e}cnicas y procesos
+de desarrollo y debugging empleados, ya que forman parte de los objetivos principales del trabajo.
+
+\subsection{Informe}
+El informe deber\'{a} incluir:
+
+\begin{itemize}
+\item Este enunciado.
+\item Documentaci\'{o}n relevante al dise\~no, desarrollo y debugging del programa.
+\item Las corridas de prueba, (secci\'{o}n 5.2) y sus correspondientes comentarios.
+\item El c\'{o}digo fuente completo, en dos formatos, digitalizado e impreso en papel.
+\end{itemize}
+
+\subsection{Fechas}
+La fecha de entrega, es el martes 3/05. La fecha de vencimiento, 17/05.
+
+\section{Documentaci\'{o}n}
+La realizaci\'{o}n  de este informe se hizo con la herramienta TEX / LATEX. Tanto el arhivo en formato pdf como el archivo .tex se encuentran en la carpeta doc del cd entregado.
+
+\section{T\'{e}cnicas y procesos de desarrollo y debugging empleados}
+
+Para la compilaci\'{o}n del trabajo se fue trabajando con las funciones que contiene el \textit{tr.c} de manera separada reimplementandolas parcialmente en 
+assembly para encontrar posibles errores, es decir, primero empezamos traduciendo a MIPS la funci\'{o}n \textit{void tr\_ds(char*, char*)} y se prob\'{o} que el programa 
+funcionara en forma correcta pasando los casos de prueba pertinentes y luego se prosigui\'{o} con \textit{void tr\_d(char*)} siguiendo la misma 
+metodolog\'{i}a hasta cubrir todas las funciones. 
+Una vez que compilaban todas de manera correcta y pasaban los casos de prueba se junto todo el c\'{o}digo assembly en el archivo \textit{tr.S} y se realiz\'{o} un 
+testeo general igual que en el tp0 y las respuestas fueron las esperadas.
+
+Para la obtenci\'{o}n del ejecutable se ejecut\'{o} lo siguiente:
+
+\textit{gcc -o tp1a main.c tr.S}
+
+\section{Casos de prueba}
+Los casos de prueba utilizados son los que figuran a continuaci\'{o}n.\\
+
+\indent\texttt{\$ echo ``3.14159192'' | ./tp1a 1 9}\\
+\indent\texttt{3.94959992}\\
+
+\indent\texttt{\$ echo ``aba'' | ./tp1a aba 123}\\
+\indent\texttt{323}\\
+
+\indent\texttt{\$ echo ``aa bb cc'' | ./tp1a -s ab}\\
+\indent\texttt{a b cc}\\
+
+\indent\texttt{\$ echo ``aa bb cc'' | ./tp1a -s ab 12}\\
+\indent\texttt{1 2 cc}\\
+
+\indent\texttt{\$ echo ``Hola mundo'' | ./tp1a -d Ho}\\
+\indent\texttt{la mund}\\
+
+\indent\texttt{\$ echo ``aabbcc'' | ./tp1a -ds a b}\\
+\indent\texttt{bcc}\\
+
+\indent\texttt{\$ echo ``aaaa'' | ./tp1a -s a b}\\
+\indent\texttt{b}\\
+
+\indent\texttt{\$ echo ``bbb bbb'' | ./tp1a -s b}\\
+\indent\texttt{b b}\\
+
+\indent\texttt{\$echo ``bbbaaabb bbabbbbbbb'' | ./tp1a -ds b a}\\
+\indent\texttt{a a}\\
+
+\indent\texttt{\$echo ``f'' | ./tp1a aba def}\\
+\indent\texttt{f}\\
+
+\indent\texttt{\$echo ``abaco'' | ./tp1a -s a}\\
+\indent\texttt{abaco}\\
+
+\indent\texttt{\$echo ``abbbbbabbaaaco'' | ./tp1a -s a b}\\
+\indent\texttt{bco}\\
+
+\indent\texttt{\$echo ``bbbbbbaaaaaaabbb'' | ./tp1a -ds a b}\\
+\indent\texttt{b}\
+
+\indent\texttt{\$echo ``abaco baco abaco'' | ./tp1a a b}\\
+\indent\texttt{bbbco bbco bbbco}\
+
+\newpage
+\newpage
+
+\section{C\'{o}digo fuente}
+A contiuaci\'{o}n se detalla el c\'{o}digo fuente implementado en lenguaje C que se encuentra en carpeta code del cd entregado 
+que consta fundamentalmente de los archivos \textit{main.c}, \textit{tr.h} y \textit{tr.c}.
+
+\lstset{basicstyle=\scriptsize, commentstyle=\textit, numbers=left, numberstyle=\footnotesize, tabsize=4, breaklines=true}
+\lstset{language=C} 
+\lstset{extendedchars=false} 
+\lstinputlisting {../code/main.c}
+\lstinputlisting {../code/tr.h}
+\lstinputlisting {../code/tr.c}
+
+\newpage
+\newpage
+
+\subsection{C\'{o}digo MIPS}
+El siguiente es el c\'{o}digo assembly que reimplementa parcialmente en assembly MIPS la versi\'{o}n minimalista del comando tr,
+este archivo se encuentra en la carpeta code del cd entregado:
+\lstset{basicstyle=\scriptsize, commentstyle=\textit, numbers=left, numberstyle=\footnotesize, tabsize=4, breaklines=true}
+\lstset{language=C} 
+\lstset{extendedchars=false} 
+\lstinputlisting {../code/tr.S}
+
+\newpage
+\newpage
+
+\section{Conclusiones}
+El presente logr\'{o} familiarizarnos a distintas herramientas que se utilizan en la materia.
+Entre las actividades realizadas podemos resaltar:
+
+\begin{itemize}
+\item Realizar c\'{o}digo en assembly para la arquitectura MIPS.
+\item Aprender a utilizar la ABI.
+\item Desarrollar el presente informe en LATEX.
+\end{itemize}
+
+\end{document}
